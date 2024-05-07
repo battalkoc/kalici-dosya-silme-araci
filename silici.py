@@ -9,9 +9,13 @@ def generate_random_data(size):
 
 def overwrite_file_randomly(file_path, num_iterations):
     try:
+        file_size = os.path.getsize(file_path)
         for i in range(num_iterations):
-            with open(file_path, 'w') as file:
-                file.write(generate_random_data(1024))  # 1024 bytes random data
+            with open(file_path, 'wb') as file:
+                karakter = b'a'
+                for _ in range(file_size):
+                    file.write(karakter)
+
         messagebox.showinfo("Başarılı", f"{num_iterations} kez dosya başarıyla üzerine yazıldı.")
     except Exception as e:
         messagebox.showerror("Hata", f"İşlem sırasında bir hata oluştu:\n{e}")
@@ -20,7 +24,7 @@ def delete_file(file_path):
     try:
         file_size = os.path.getsize(file_path)
         with open(file_path, 'w') as file:
-            file.write(generate_random_data(file_size))
+            file.write(generate_random_data(101024))
         os.remove(file_path)
         messagebox.showinfo("Başarılı", "Dosya başarıyla silindi ve boş alan temizlendi.")
     except Exception as e:
